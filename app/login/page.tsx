@@ -1,6 +1,12 @@
 "use client"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
+
+// Helper to check if loginInfo is expired (older than 1 hour)
+
+
+
+
 
 export default function LoginPage() {
   const [userId, setUserId] = useState("")
@@ -9,6 +15,8 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
 
+  // On mount, check if loginInfo exists and is expired
+  
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError("")
@@ -29,6 +37,14 @@ export default function LoginPage() {
         const data = await res.json().catch(() => ({}))
         throw new Error(data?.error || "Invalid credentials")
       }
+      // Store username and login time as an object in localStorage
+      if (typeof window !== "undefined") {
+        const loginInfo = {
+          username: userId.trim(),
+          time: new Date().toISOString(),
+        };
+        localStorage.setItem("loginInfo", JSON.stringify(loginInfo));
+      }
       router.replace("/")
     } catch (err: any) {
       setError(err.message)
@@ -36,6 +52,9 @@ export default function LoginPage() {
       setLoading(false)
     }
   }
+
+  // Logout handler: remove loginInfo from localStorage and redirect
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">

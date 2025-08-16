@@ -2,7 +2,7 @@ import { NextResponse } from "next/server"
 import { sign } from "jsonwebtoken"
 
 const USER_ID = process.env.DASHBOARD_USER_ID || "admin"
-const PASSWORD = process.env.DASHBOARD_PASSWORD || "password"
+const PASSWORD = process.env.DASHBOARD_PASSWORD || "admin123"
 const SECRET = process.env.AUTH_SECRET || "supersecret"
 const AUTH_COOKIE = "dashboard_auth"
 
