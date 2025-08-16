@@ -2,20 +2,12 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 
-// Helper to check if loginInfo is expired (older than 1 hour)
-
-
-
-
-
 export default function LoginPage() {
   const [userId, setUserId] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const router = useRouter()
-
-  // On mount, check if loginInfo exists and is expired
   
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -53,7 +45,6 @@ export default function LoginPage() {
     }
   }
 
-  // Logout handler: remove loginInfo from localStorage and redirect
   
 
   return (

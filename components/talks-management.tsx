@@ -166,14 +166,14 @@ export function TalksManagement() {
               Add Talk
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-2xl">
+          <DialogContent className="max-w-md max-h-[80vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>{editingTalk ? "Edit" : "Add"} Talk</DialogTitle>
               <DialogDescription>
                 {editingTalk ? "Update the talk details" : "Add a new speaking engagement"}
               </DialogDescription>
             </DialogHeader>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-2">
               <ImageUpload
                 onUpload={(result) => setFormData((prev) => ({ ...prev, image: result }))}
                 currentImage={formData.image.url}
@@ -182,39 +182,42 @@ export function TalksManagement() {
                 height={400}
               />
               <div>
-                <Label htmlFor="name">Talk Title</Label>
+                <Label htmlFor="name" className="mb-1 block text-xs">Talk Title</Label>
                 <Input
                   id="name"
                   value={formData.name}
                   onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
-                  placeholder="Title of your talk or presentation"
+                  placeholder="Title"
+                  className="h-8 text-sm"
                 />
               </div>
               <div>
-                <Label htmlFor="description">Description</Label>
+                <Label htmlFor="description" className="mb-1 block text-xs">Description</Label>
                 <Textarea
                   id="description"
                   value={formData.description}
                   onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
-                  placeholder="Description of the talk content and key points"
-                  rows={4}
+                  placeholder="Description"
+                  rows={2}
+                  className="text-sm min-h-[40px]"
                 />
               </div>
               <div>
-                <Label htmlFor="referenceLink">Reference Link (Optional)</Label>
+                <Label htmlFor="referenceLink" className="mb-1 block text-xs">Reference Link (Optional)</Label>
                 <Input
                   id="referenceLink"
                   type="url"
                   value={formData.referenceLink}
                   onChange={(e) => setFormData((prev) => ({ ...prev, referenceLink: e.target.value }))}
-                  placeholder="https://example.com/talk-recording"
+                  placeholder="https://example.com"
+                  className="h-8 text-sm"
                 />
               </div>
-              <DialogFooter>
-                <Button type="button" variant="outline" onClick={handleDialogClose}>
+              <DialogFooter className="pt-2">
+                <Button type="button" variant="outline" onClick={handleDialogClose} className="h-8 px-3 text-sm">
                   Cancel
                 </Button>
-                <Button type="submit">{editingTalk ? "Update" : "Create"} Talk</Button>
+                <Button type="submit" className="h-8 px-3 text-sm">{editingTalk ? "Update" : "Create"} Talk</Button>
               </DialogFooter>
             </form>
           </DialogContent>

@@ -182,7 +182,7 @@ export function PatentsManagement() {
               Add Patent
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-2xl">
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>{editingPatent ? "Edit" : "Add"} Patent</DialogTitle>
               <DialogDescription>

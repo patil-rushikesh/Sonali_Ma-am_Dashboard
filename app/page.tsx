@@ -245,7 +245,7 @@ export default function Dashboard() {
 
         {/* Main Content */}
         <main className="flex-1 overflow-auto">
-          <div className="container mx-auto p-6">
+          <div className="container mx-auto p-6 h-full max-h-[calc(100vh-4rem)] overflow-auto">
             {/* Page Header */}
             <div className="mb-8">
               <div className="flex items-center gap-3 mb-2">
