@@ -163,14 +163,14 @@ export function StartupsManagement() {
               Add Startup
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-2xl">
+          <DialogContent className="max-w-md max-h-[80vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>{editingStartup ? "Edit" : "Add"} Startup</DialogTitle>
               <DialogDescription>
                 {editingStartup ? "Update the startup details" : "Add a new startup venture"}
               </DialogDescription>
             </DialogHeader>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-2">
               <ImageUpload
                 onUpload={(result) => setFormData((prev) => ({ ...prev, image: result }))}
                 currentImage={formData.image.url}
@@ -179,29 +179,31 @@ export function StartupsManagement() {
                 height={400}
               />
               <div>
-                <Label htmlFor="title">Startup Title</Label>
+                <Label htmlFor="title" className="mb-1 block text-xs">Startup Title</Label>
                 <Input
                   id="title"
                   value={formData.title}
                   onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
                   placeholder="Name of your startup"
+                  className="h-8 text-sm"
                 />
               </div>
               <div>
-                <Label htmlFor="description">Description</Label>
+                <Label htmlFor="description" className="mb-1 block text-xs">Description</Label>
                 <Textarea
                   id="description"
                   value={formData.description}
                   onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
-                  placeholder="Description of your startup, its mission, and key features"
-                  rows={4}
+                  placeholder="Description"
+                  rows={2}
+                  className="text-sm min-h-[40px]"
                 />
               </div>
-              <DialogFooter>
-                <Button type="button" variant="outline" onClick={handleDialogClose}>
+              <DialogFooter className="pt-2">
+                <Button type="button" variant="outline" onClick={handleDialogClose} className="h-8 px-3 text-sm">
                   Cancel
                 </Button>
-                <Button type="submit">{editingStartup ? "Update" : "Create"} Startup</Button>
+                <Button type="submit" className="h-8 px-3 text-sm">{editingStartup ? "Update" : "Create"} Startup</Button>
               </DialogFooter>
             </form>
           </DialogContent>

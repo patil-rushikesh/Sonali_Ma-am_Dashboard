@@ -29,8 +29,10 @@ export function ResearchGrantsManagement() {
   const [formData, setFormData] = useState({
     fundReceived: 0,
     title: "",
-    year: new Date().getFullYear(),
     grantAgency: "",
+    currency: "USD",
+    startYear: new Date().getFullYear(),
+    endYear: new Date().getFullYear(),
   })
   const { toast } = useToast()
 
@@ -126,8 +128,10 @@ export function ResearchGrantsManagement() {
     setFormData({
       fundReceived: grant.fundReceived,
       title: grant.title,
-      year: grant.year,
       grantAgency: grant.grantAgency,
+      currency: grant.currency || "USD",
+      startYear: grant.startYear || new Date().getFullYear(),
+      endYear: grant.endYear || new Date().getFullYear(),
     })
     setDialogOpen(true)
   }
@@ -136,8 +140,10 @@ export function ResearchGrantsManagement() {
     setFormData({
       fundReceived: 0,
       title: "",
-      year: new Date().getFullYear(),
       grantAgency: "",
+      currency: "USD",
+      startYear: new Date().getFullYear(),
+      endYear: new Date().getFullYear(),
     })
     setEditingGrant(null)
   }
@@ -147,10 +153,10 @@ export function ResearchGrantsManagement() {
     resetForm()
   }
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-US", {
+  const formatCurrency = (amount: number, currency: string) => {
+    return new Intl.NumberFormat("en-IN", {
       style: "currency",
-      currency: "USD",
+      currency: currency === "INR" ? "INR" : "USD",
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(amount)
@@ -194,9 +200,9 @@ export function ResearchGrantsManagement() {
                   placeholder="Title of the research grant"
                 />
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-4 gap-4">
                 <div>
-                  <Label htmlFor="fundReceived">Fund Received ($)</Label>
+                  <Label htmlFor="fundReceived">Fund Received</Label>
                   <Input
                     id="fundReceived"
                     type="number"
@@ -210,11 +216,38 @@ export function ResearchGrantsManagement() {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="year">Year</Label>
+                  <Label htmlFor="currency">Currency</Label>
                   <select
-                    id="year"
-                    value={formData.year}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, year: Number.parseInt(e.target.value) }))}
+                    id="currency"
+                    value={formData.currency}
+                    onChange={e => setFormData((prev) => ({ ...prev, currency: e.target.value }))}
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    <option value="USD">Dollar (USD)</option>
+                    <option value="INR">Rupees (INR)</option>
+                  </select>
+                </div>
+                <div>
+                  <Label htmlFor="startYear">Start Year</Label>
+                  <select
+                    id="startYear"
+                    value={formData.startYear}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, startYear: Number.parseInt(e.target.value) }))}
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    {years.map((year) => (
+                      <option key={year} value={year}>
+                        {year}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <Label htmlFor="endYear">End Year</Label>
+                  <select
+                    id="endYear"
+                    value={formData.endYear}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, endYear: Number.parseInt(e.target.value) }))}
                     className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {years.map((year) => (
@@ -255,13 +288,17 @@ export function ResearchGrantsManagement() {
                     <CardTitle className="text-lg">{grant.title}</CardTitle>
                     <Badge variant="secondary" className="flex items-center gap-1">
                       <Calendar className="h-3 w-3" />
-                      {grant.year}
                     </Badge>
                   </div>
                   <div className="space-y-1 text-sm text-muted-foreground">
                     <div className="flex items-center gap-2">
                       <DollarSign className="h-4 w-4" />
-                      <span className="font-medium text-foreground">{formatCurrency(grant.fundReceived)}</span>
+                      <span className="font-medium text-foreground">
+                        {formatCurrency(grant.fundReceived, grant.currency || "USD")}
+                      </span>
+                    </div>
+                    <div>
+                      Duration: {grant.startYear} - {grant.endYear}
                     </div>
                     <div>Grant Agency: {grant.grantAgency}</div>
                   </div>

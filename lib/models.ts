@@ -81,6 +81,9 @@ export interface ResearchGrant extends BaseModel {
   title: string
   year: number
   grantAgency: string
+  currency?: string
+  startYear?: number
+  endYear?: number
 }
 
 // Gallery
