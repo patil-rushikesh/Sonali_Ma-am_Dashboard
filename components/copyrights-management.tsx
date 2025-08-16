@@ -29,6 +29,7 @@ export function CopyrightsManagement() {
     title: "",
     diaryNumber: "",
     copyrightRegOf: "",
+    status: "", // Add status field
   })
   const { toast } = useToast()
 
@@ -125,6 +126,7 @@ export function CopyrightsManagement() {
       title: copyright.title,
       diaryNumber: copyright.diaryNumber,
       copyrightRegOf: copyright.copyrightRegOf,
+      status: copyright.status || "", 
     })
     setDialogOpen(true)
   }
@@ -134,6 +136,7 @@ export function CopyrightsManagement() {
       title: "",
       diaryNumber: "",
       copyrightRegOf: "",
+      status: "", // Add status field
     })
     setEditingCopyright(null)
   }
@@ -196,6 +199,15 @@ export function CopyrightsManagement() {
                   placeholder="What the copyright is registered for"
                 />
               </div>
+              <div>
+                <Label htmlFor="status">Status</Label>
+                <Input
+                  id="status"
+                  value={formData.status}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, status: e.target.value }))}
+                  placeholder="e.g., Filed, Pending, Granted"
+                />
+              </div>
               <DialogFooter>
                 <Button type="button" variant="outline" onClick={handleDialogClose}>
                   Cancel
@@ -217,6 +229,7 @@ export function CopyrightsManagement() {
                   <div className="space-y-1 text-sm text-muted-foreground mt-2">
                     <div>Diary Number: {copyright.diaryNumber}</div>
                     <div>Registration Of: {copyright.copyrightRegOf}</div>
+                    <div>Status: {copyright.status || <span className="italic text-muted-foreground">N/A</span>}</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 ml-4">

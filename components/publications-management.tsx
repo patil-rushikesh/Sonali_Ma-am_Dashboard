@@ -20,6 +20,7 @@ import {
 import { Plus, Edit, Trash2, BookOpen, ExternalLink } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import type { Publication } from "@/lib/models"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 export function PublicationsManagement() {
   const [publications, setPublications] = useState<Publication[]>([])
@@ -30,6 +31,7 @@ export function PublicationsManagement() {
     name: "",
     description: "",
     link: "",
+    type: "journal", // Add type field, default to "journal"
   })
   const { toast } = useToast()
 
@@ -126,6 +128,7 @@ export function PublicationsManagement() {
       name: publication.name,
       description: publication.description,
       link: publication.link || "",
+      type: publication.type || "journal", // Add type field
     })
     setDialogOpen(true)
   }
@@ -135,6 +138,7 @@ export function PublicationsManagement() {
       name: "",
       description: "",
       link: "",
+      type: "journal", // Reset type field
     })
     setEditingPublication(null)
   }
@@ -170,6 +174,23 @@ export function PublicationsManagement() {
               </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <Label htmlFor="type">Type</Label>
+                <Select
+                  value={formData.type}
+                  onValueChange={(value: "journal" | "book") =>
+                    setFormData((prev) => ({ ...prev, type: value }))
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="journal">Journal</SelectItem>
+                    <SelectItem value="book">Book</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
               <div>
                 <Label htmlFor="name">Publication Title</Label>
                 <Input
@@ -218,6 +239,9 @@ export function PublicationsManagement() {
                 <div className="flex-1">
                   <CardTitle className="text-lg">{publication.name}</CardTitle>
                   <CardDescription className="mt-2">{publication.description}</CardDescription>
+                  <div className="mt-1 text-xs text-muted-foreground">
+                    Type: {publication.type ? (publication.type === "journal" ? "Journal" : "Book") : "Journal"}
+                  </div>
                   {publication.link && (
                     <div className="mt-3">
                       <a

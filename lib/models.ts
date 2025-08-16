@@ -45,6 +45,7 @@ export interface Publication extends BaseModel {
   name: string
   description: string
   link?: string
+  type?: "journal" | "book"
 }
 
 // Patents
@@ -61,6 +62,7 @@ export interface Copyright extends BaseModel {
   title: string
   diaryNumber: string
   copyrightRegOf: string
+  status?: string
 }
 
 // Startups
