@@ -175,8 +175,8 @@ export function StartupsManagement() {
                 onUpload={(result) => setFormData((prev) => ({ ...prev, image: result }))}
                 currentImage={formData.image.url}
                 folder="startups"
-                width={600}
-                height={400}
+                width={undefined}
+                height={undefined}
               />
               <div>
                 <Label htmlFor="title" className="mb-1 block text-xs">Startup Title</Label>
