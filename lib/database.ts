@@ -3,6 +3,9 @@ import { ObjectId } from "mongodb"
 import type { BaseModel } from "./models"
 
 export class DatabaseService<T extends BaseModel> {
+  deleteById(arg0: number) {
+      throw new Error("Method not implemented.")
+  }
   private collectionName: string
 
   constructor(collectionName: string) {
@@ -71,3 +74,4 @@ export const copyrightsService = new DatabaseService<import("./models").Copyrigh
 export const startupsService = new DatabaseService<import("./models").Startup>("startups")
 export const researchGrantsService = new DatabaseService<import("./models").ResearchGrant>("researchGrants")
 export const galleryService = new DatabaseService<import("./models").Gallery>("gallery")
+export const phdGuideService = new DatabaseService<import("./models").PhdGuide>("phdguide")

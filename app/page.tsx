@@ -29,6 +29,7 @@ import { CopyrightsManagement } from "@/components/copyrights-management";
 import { StartupsManagement } from "@/components/startups-management";
 import { ResearchGrantsManagement } from "@/components/research-grants-management";
 import { GalleryManagement } from "@/components/gallery-management";
+import PhdGuideForm from "@/components/phdGuide";
 import { useRouter } from "next/navigation";
 
 const navigationItems = [
@@ -85,6 +86,13 @@ const navigationItems = [
     label: "Gallery",
     icon: ImageIcon,
     description: "Image gallery",
+  },
+  {
+    id: "phdguide",
+    label: "PhD Guide",
+    icon: BookOpen,
+    description:
+      "Supervisor, Research Center, Title, Scholar, Result, Declaration",
   },
 ];
 
@@ -149,6 +157,8 @@ export default function Dashboard() {
         return <ResearchGrantsManagement />;
       case "gallery":
         return <GalleryManagement />;
+      case "phdguide":
+        return <PhdGuideForm />;
       default:
         return null;
     }

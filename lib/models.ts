@@ -96,3 +96,13 @@ export interface Gallery extends BaseModel {
   shortDescription: string
   location: string
 }
+
+// PhD Guide
+export interface PhdGuide extends BaseModel {
+  supervisor: string
+  researchCenter: string
+  title: string
+  researchScholar: string
+  result: string
+  declaration: string
+}
