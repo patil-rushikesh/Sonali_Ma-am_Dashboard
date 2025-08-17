@@ -12,6 +12,20 @@ export async function GET() {
   }
 }
 
+export async function PUT(request: NextRequest) {
+  try {
+    const data = await request.json();
+    console.log("Updating PhD guide entry with ID:", data.id, "Data:", data);
+    const updated = await phdGuideService.update(data.id, data);
+    if (!updated) {
+      return NextResponse.json({ error: "Not found" }, { status: 404 });
+    }
+    return NextResponse.json(updated);
+  } catch (error) {
+    return NextResponse.json({ error: "Failed to update entry" }, { status: 500 });
+  }
+}
+
 // POST: create a new entry
 export async function POST(request: NextRequest) {
   try {
@@ -29,7 +43,7 @@ export async function DELETE(request: NextRequest) {
   try {
     const { id } = await request.json();
 
-    const deleted = await phdGuideService.deleteById(Number(id));
+    const deleted = await phdGuideService.delete(id);
     if (!deleted) {
       return NextResponse.json({ error: "Not found" }, { status: 404 });
     }

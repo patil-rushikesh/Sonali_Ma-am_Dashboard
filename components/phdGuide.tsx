@@ -52,6 +52,7 @@ const createPhdGuideEntry = async (entry: PhdGuideEntry) => {
 
 const updatePhdGuideEntry = async (id: string, entry: PhdGuideEntry) => {
   // Use PUT to /api/phdguide with id in body
+//   console.log("Updating PhD guide entry with ID:", id, "Data:", entry);
   return fetch("/api/phdguide", {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
