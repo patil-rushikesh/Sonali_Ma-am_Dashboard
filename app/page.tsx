@@ -92,7 +92,7 @@ const navigationItems = [
     label: "PhD Guide",
     icon: BookOpen,
     description:
-      "Supervisor, Research Center, Title, Scholar, Result, Declaration",
+      "Manage PhD guide entries",
   },
 ];
 
