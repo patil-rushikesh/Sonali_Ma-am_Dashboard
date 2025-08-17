@@ -6,7 +6,7 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata: Metadata = {
-  title: "Dashboard - CRUD Operations",
+  title: "Dr. Sonali Patil-Dashboard",
   description: "Professional dashboard with CRUD operations",
   generator: "v0.app",
 }
