@@ -75,3 +75,4 @@ export const startupsService = new DatabaseService<import("./models").Startup>("
 export const researchGrantsService = new DatabaseService<import("./models").ResearchGrant>("researchGrants")
 export const galleryService = new DatabaseService<import("./models").Gallery>("gallery")
 export const phdGuideService = new DatabaseService<import("./models").PhdGuide>("phdguide")
+export const learningResourcesService = new DatabaseService<import("./models").LearningResource>("learningresources")

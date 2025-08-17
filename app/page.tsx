@@ -30,6 +30,7 @@ import { StartupsManagement } from "@/components/startups-management";
 import { ResearchGrantsManagement } from "@/components/research-grants-management";
 import { GalleryManagement } from "@/components/gallery-management";
 import PhdGuideForm from "@/components/phdGuide";
+import LearningResourcesManagement from "@/components/learningResources";
 import { useRouter } from "next/navigation";
 
 const navigationItems = [
@@ -93,6 +94,12 @@ const navigationItems = [
     icon: BookOpen,
     description:
       "Manage PhD guide entries",
+  },
+  {
+    id: "learningresources",
+    label: "Learning Resources",
+    icon: FileText,
+    description: "Manage learning resources (videos, drive links, etc.)",
   },
 ];
 
@@ -159,6 +166,8 @@ export default function Dashboard() {
         return <GalleryManagement />;
       case "phdguide":
         return <PhdGuideForm />;
+      case "learningresources":
+        return <LearningResourcesManagement />;
       default:
         return null;
     }

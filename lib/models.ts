@@ -106,3 +106,11 @@ export interface PhdGuide extends BaseModel {
   result: string
   declaration: string
 }
+
+// Learning Resource
+export interface LearningResource extends BaseModel {
+  title: string
+  description: string
+  type: "video" | "drive"
+  link: string
+}
