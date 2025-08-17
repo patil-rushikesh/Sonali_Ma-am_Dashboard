@@ -99,7 +99,7 @@ const navigationItems = [
     id: "learningresources",
     label: "Learning Resources",
     icon: FileText,
-    description: "Manage learning resources (videos, drive links, etc.)",
+    description: "Manage learning resources ",
   },
 ];
 
