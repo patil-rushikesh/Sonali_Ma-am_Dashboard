@@ -107,6 +107,7 @@ export default function Dashboard() {
   const [activeSection, setActiveSection] = useState("testimonials");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { theme, setTheme } = useTheme();
+  const [auth, setAuth] = useState(false);
   const router = useRouter();
   function isLoginExpired(loginInfo: { time: string }) {
     const loginTime = new Date(loginInfo.time).getTime();
@@ -123,12 +124,17 @@ export default function Dashboard() {
             localStorage.removeItem("loginInfo");
             router.replace("/login");
           }
+          else{
+            setAuth(true);
+          }
         } catch {}
       } else {
         router.push("/login");
       }
     }
   }, []);
+
+  if(!auth) return null;
 
   async function handleLogout() {
     await fetch("/api/auth/logout", {

@@ -2,6 +2,9 @@ import { type NextRequest, NextResponse } from "next/server"
 import { talksService } from "@/lib/database"
 import { deleteFromCloudinary } from "@/lib/cloudinary"
 
+
+const AUTH_COOKIE = "dashboard_auth";
+
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const talk = await talksService.findById(params.id)
@@ -17,6 +20,11 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
   try {
+    const token = request.cookies.get(AUTH_COOKIE)?.value;
+
+    if (!token) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     const data = await request.json()
     const talk = await talksService.update(params.id, data)
     if (!talk) {
@@ -31,6 +39,13 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   try {
+
+    const token = request.cookies.get(AUTH_COOKIE)?.value;
+
+    if (!token) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const talk = await talksService.findById(params.id)
     if (!talk) {
       return NextResponse.json({ error: "Talk not found" }, { status: 404 })

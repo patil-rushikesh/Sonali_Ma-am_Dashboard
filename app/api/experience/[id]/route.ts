@@ -1,6 +1,8 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { experienceService } from "@/lib/database"
 
+const AUTH_COOKIE = "dashboard_auth";
+
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const experience = await experienceService.findById(params.id)
@@ -16,6 +18,11 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
   try {
+    const token = request.cookies.get(AUTH_COOKIE)?.value;
+
+    if (!token) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     const data = await request.json()
     const experience = await experienceService.update(params.id, data)
     if (!experience) {
@@ -30,6 +37,11 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   try {
+    const token = request.cookies.get(AUTH_COOKIE)?.value;
+
+    if (!token) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     const deleted = await experienceService.delete(params.id)
     if (!deleted) {
       return NextResponse.json({ error: "Experience not found" }, { status: 404 })

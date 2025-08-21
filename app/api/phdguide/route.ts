@@ -1,6 +1,8 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { phdGuideService } from "@/lib/database";
 
+const AUTH_COOKIE = "dashboard_auth";
+
 // GET: fetch all entries
 export async function GET() {
   try {
@@ -14,6 +16,11 @@ export async function GET() {
 
 export async function PUT(request: NextRequest) {
   try {
+    const token = request.cookies.get(AUTH_COOKIE)?.value;
+
+    if (!token) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     const data = await request.json();
     console.log("Updating PhD guide entry with ID:", data.id, "Data:", data);
     const updated = await phdGuideService.update(data.id, data);
@@ -29,6 +36,11 @@ export async function PUT(request: NextRequest) {
 // POST: create a new entry
 export async function POST(request: NextRequest) {
   try {
+    const token = request.cookies.get(AUTH_COOKIE)?.value;
+
+    if (!token) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     const data = await request.json();
     const entry = await phdGuideService.create(data);
     return NextResponse.json(entry);

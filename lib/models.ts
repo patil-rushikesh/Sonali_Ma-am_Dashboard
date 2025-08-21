@@ -114,3 +114,9 @@ export interface LearningResource extends BaseModel {
   type: "video" | "drive"
   link: string
 }
+
+
+export interface Login extends BaseModel {
+  username: string
+  password: string
+}

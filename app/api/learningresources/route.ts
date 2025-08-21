@@ -1,6 +1,8 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { learningResourcesService } from "@/lib/database";
 
+const AUTH_COOKIE = "dashboard_auth";
+
 // GET: fetch all learning resources
 export async function GET() {
   try {
@@ -14,6 +16,11 @@ export async function GET() {
 // PUT: update a learning resource by ID
 export async function PUT(request: NextRequest) {
   try {
+    const token = request.cookies.get(AUTH_COOKIE)?.value;
+
+    if (!token) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     const data = await request.json();
     // expects data to have an 'id' field
     const updated = await learningResourcesService.update(data.id, data);
@@ -29,6 +36,11 @@ export async function PUT(request: NextRequest) {
 // POST: create a new learning resource
 export async function POST(request: NextRequest) {
   try {
+    const token = request.cookies.get(AUTH_COOKIE)?.value;
+
+    if (!token) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     const data = await request.json();
     const resource = await learningResourcesService.create(data);
     return NextResponse.json(resource);
@@ -40,6 +52,11 @@ export async function POST(request: NextRequest) {
 // DELETE: remove a learning resource by ID
 export async function DELETE(request: NextRequest) {
   try {
+    const token = request.cookies.get(AUTH_COOKIE)?.value;
+
+    if (!token) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     const { id } = await request.json();
     const deleted = await learningResourcesService.delete(id);
     if (!deleted) {

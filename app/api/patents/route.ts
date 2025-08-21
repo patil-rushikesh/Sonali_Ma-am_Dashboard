@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { patentsService } from "@/lib/database"
-
+const AUTH_COOKIE = "dashboard_auth";
 export async function GET() {
   try {
     const patents = await patentsService.findAll()
@@ -13,6 +13,11 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
+    const token = request.cookies.get(AUTH_COOKIE)?.value;
+
+    if (!token) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     const data = await request.json()
     const patent = await patentsService.create(data)
     return NextResponse.json(patent)

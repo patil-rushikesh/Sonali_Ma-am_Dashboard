@@ -2,6 +2,8 @@ import { type NextRequest, NextResponse } from "next/server"
 import { galleryService } from "@/lib/database"
 import { deleteFromCloudinary } from "@/lib/cloudinary"
 
+const AUTH_COOKIE = "dashboard_auth";
+
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const galleryItem = await galleryService.findById(params.id)
@@ -17,6 +19,11 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
   try {
+    const token = request.cookies.get(AUTH_COOKIE)?.value;
+
+    if (!token) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     const data = await request.json()
     const galleryItem = await galleryService.update(params.id, data)
     if (!galleryItem) {
@@ -31,6 +38,11 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   try {
+    const token = request.cookies.get(AUTH_COOKIE)?.value;
+
+    if (!token) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     const galleryItem = await galleryService.findById(params.id)
     if (!galleryItem) {
       return NextResponse.json({ error: "Gallery item not found" }, { status: 404 })

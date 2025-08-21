@@ -1,6 +1,8 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { copyrightsService } from "@/lib/database"
 
+const AUTH_COOKIE = "dashboard_auth";
+
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const copyright = await copyrightsService.findById(params.id)
@@ -16,6 +18,11 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
   try {
+    const token = request.cookies.get(AUTH_COOKIE)?.value;
+
+    if (!token) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     const data = await request.json()
     const copyright = await copyrightsService.update(params.id, data)
     if (!copyright) {
@@ -30,6 +37,11 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   try {
+    const token = request.cookies.get(AUTH_COOKIE)?.value;
+
+    if (!token) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     const deleted = await copyrightsService.delete(params.id)
     if (!deleted) {
       return NextResponse.json({ error: "Copyright not found" }, { status: 404 })

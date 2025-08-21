@@ -36,6 +36,11 @@ export class DatabaseService<T extends BaseModel> {
     return await collection.find({}).sort({ createdAt: -1 }).toArray()
   }
 
+  async findOne(username: string): Promise<T | null> {
+    const collection = await this.getCollection();
+    return await collection.findOne({ username } as any);
+  }
+
   async findById(id: string): Promise<T | null> {
     const collection = await this.getCollection()
     return await collection.findOne({ _id: new ObjectId(id) } as any)
@@ -76,3 +81,4 @@ export const researchGrantsService = new DatabaseService<import("./models").Rese
 export const galleryService = new DatabaseService<import("./models").Gallery>("gallery")
 export const phdGuideService = new DatabaseService<import("./models").PhdGuide>("phdguide")
 export const learningResourcesService = new DatabaseService<import("./models").LearningResource>("learningresources")
+export const loginService = new DatabaseService<import("./models").Login>("login")

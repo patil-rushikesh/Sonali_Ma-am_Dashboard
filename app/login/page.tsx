@@ -22,7 +22,7 @@ export default function LoginPage() {
           userId: userId.trim(),
           password: password.trim(),
         }),
-        credentials: "include", // keep only if your API sets cookies
+        credentials: "include",
       })
 
       if (!res.ok) {

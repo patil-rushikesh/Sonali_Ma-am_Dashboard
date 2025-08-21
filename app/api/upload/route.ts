@@ -1,8 +1,15 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { uploadToCloudinary } from "@/lib/cloudinary"
 
+const AUTH_COOKIE = "dashboard_auth";
+
 export async function POST(request: NextRequest) {
   try {
+    const token = request.cookies.get(AUTH_COOKIE)?.value;
+
+    if (!token) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     const formData = await request.formData()
     const file = formData.get("file") as File
     const folder = (formData.get("folder") as string) || "dashboard"
