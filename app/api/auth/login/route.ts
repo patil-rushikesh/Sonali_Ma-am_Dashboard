@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server"
 import { sign } from "jsonwebtoken"
 import {loginService} from "@/lib/database";
-import { compare } from "bcryptjs";
 import { compareHash } from "@/lib/hashpass";
 const SECRET = process.env.AUTH_SECRET || "supersecret"
 const AUTH_COOKIE = "dashboard_auth"
