@@ -19,7 +19,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "User not found" }, { status: 404 })
   }
 
-  if (!compareHash(user.password, password)) {
+  if (!(await compareHash(password, user.password))) {
     return NextResponse.json({ error: "Invalid credentials" }, { status: 401 })
   }
 
